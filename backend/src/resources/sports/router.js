@@ -1,8 +1,9 @@
-// const sportsRouter = require('express').Router()
+const sportsRouter = require('express').Router()
 
-// const { getAllSports, createOneSport } = require('./controller')
+const { getAllSports, getOneSport, createOneSport } = require('./controller')
 
-// sportsRouter.get('/', getAllSports)
-// sportsRouter.post('/', createOneSport)
+sportsRouter.get('/', getAllSports)
+sportsRouter.get('/:id', getOneSport)
+sportsRouter.post('/', createOneSport)
 
-// module.exports = sportsRouter
+module.exports = sportsRouter

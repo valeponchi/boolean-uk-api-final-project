@@ -5,7 +5,7 @@ const app = express()
 
 // ROUTERS
 
-// const sportsRouter = require('./resources/sports/router')
+const sportsRouter = require('./resources/sports/router')
 const locationRouter = require('./resources/locations/router')
 
 // MIDDLEWARES
@@ -13,7 +13,7 @@ app.use(morgan('dev'))
 app.use(express.json())
 
 // ROUTES
-// app.use('/sports', sportsRouter)
+app.use('/sports', sportsRouter)
 app.use('/locations', locationRouter)
 
 app.get('*', (req, res) => {
