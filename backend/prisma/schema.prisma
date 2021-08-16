@@ -4,8 +4,51 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
+}
+
+model Location {
+  id            Int       @id @default(autoincrement())
+  title         String    @unique
+  date          String
+  sports        Sport[]
+}
+
+
+model Sport {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  // olympic_debut String?
+  locationId    Int
+  location      Location  @relation(fields: [locationId], references: [id])
+  categories    Category[]
+  }
+
+model Category {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  sportId       Int
+  sport         Sport     @relation(fields: [sportId], references: [id])
+  athletes      Athlete[]
+}
+
+model Athlete {
+  id            Int       @id @default(autoincrement())
+  first_name    String   
+  last_name     String 
+  categoryId    Int
+  category      Category  @relation(fields: [categoryId], references: [id])
+  countryId     Int
+  country       Country   @relation(fields: [categoryId], references: [id])
+}
+
+model Country {
+  id            Int       @id @default(autoincrement())
+  name          String
+  athletes      Athlete[]
 }
