@@ -1,8 +1,14 @@
-// const countriesRouter = require('express').Router()
+const countriesRouter = require('express').Router()
 
-// const { getAllCountries, createOneCountry } = require('./controller')
+const {
+	getOneCountry,
+	getAllCountries,
+	createOneCountry,
+} = require('./controller')
 
-// designerRouter.get('/', getAllCountries)
-// designerRouter.post('/', createOneCountry)
+countriesRouter.get('/', getAllCountries)
+countriesRouter.get('/:id', getOneCountry)
 
-// module.exports = countriesRouter
+countriesRouter.post('/', createOneCountry)
+
+module.exports = countriesRouter

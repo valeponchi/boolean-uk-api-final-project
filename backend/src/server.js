@@ -5,16 +5,21 @@ const app = express()
 
 // ROUTERS
 
-const sportsRouter = require('./resources/sports/router')
+const athleteRouter = require('./resources/athletes/router')
+const categoriesRouter = require('./resources/categories/router')
+const countriesRouter = require('./resources/countries/router')
 const locationRouter = require('./resources/locations/router')
-
+const sportsRouter = require('./resources/sports/router')
 // MIDDLEWARES
 app.use(morgan('dev'))
 app.use(express.json())
 
 // ROUTES
-app.use('/sports', sportsRouter)
+app.use('/athletes', athleteRouter)
+app.use('/categories', categoriesRouter)
+app.use('/countries', countriesRouter)
 app.use('/locations', locationRouter)
+app.use('/sports', sportsRouter)
 
 app.get('*', (req, res) => {
 	res.status(404).json({ msg: 'No route is matching your request..' })

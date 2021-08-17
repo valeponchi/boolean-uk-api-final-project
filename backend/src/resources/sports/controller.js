@@ -28,4 +28,13 @@ const getOneSport = async (req, res) => {
 	res.json({ data: oneSport })
 }
 
-module.exports = { createOneSport, getOneSport, getAllSports }
+const deleteSport = async (req, res) => {
+	const id = parseInt(req.params.id)
+
+	const deletedSport = await sport.delete({
+		where: { id },
+	})
+	res.json({ data: deletedSport })
+}
+
+module.exports = { deleteSport, createOneSport, getOneSport, getAllSports }

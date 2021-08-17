@@ -35,16 +35,20 @@ model Category {
   sportId       Int
   sport         Sport     @relation(fields: [sportId], references: [id])
   athletes      Athlete[]
+  final_result  Result[]
 }
 
 model Athlete {
   id            Int       @id @default(autoincrement())
-  first_name    String   
-  last_name     String 
+  firstName     String   
+  lastName       String 
   categoryId    Int
   category      Category  @relation(fields: [categoryId], references: [id])
   countryId     Int
-  country       Country   @relation(fields: [categoryId], references: [id])
+  country       Country   @relation(fields: [countryId], references: [id])
+  goldResult    Result[] @relation("gold-winner")
+  silverResult  Result[] @relation("silver-winner")
+  bronzeResult  Result[] @relation("bronze-winner")
 }
 
 model Country {
@@ -52,3 +56,20 @@ model Country {
   name          String
   athletes      Athlete[]
 }
+
+model Result {
+  id                Int       @id @default(autoincrement())
+  name              String
+  categoryId        Int
+  category          Category  @relation(fields: [categoryId], references: [id])
+
+  goldAthleteId   Int
+  goldAthlete      Athlete  @relation("gold-winner", fields: [goldAthleteId], references: [id])
+
+  silverAthleteId Int
+  silverAthlete    Athlete  @relation("silver-winner", fields: [silverAthleteId], references: [id])
+
+  bronzeAthleteId Int
+  bronzeAthlete    Athlete  @relation("bronze-winner", fields: [bronzeAthleteId], references: [id])
+}
+
