@@ -4,8 +4,77 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
 }
+
+model Location {
+  id            Int       @id @default(autoincrement())
+  title         String    @unique
+  date          String
+  sports        Sport[]
+}
+
+model Sport {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  locationId    Int
+  location      Location  @relation(fields: [locationId], references: [id])
+  categories    Category[]
+  }
+
+model Category {
+  id            Int       @id @default(autoincrement())
+  name          String    @unique
+  sportId       Int
+  sport         Sport     @relation(fields: [sportId], references: [id])
+  final_result  Result[]
+  athletes      CategoriesOnAthletes[]
+}
+
+model CategoriesOnAthletes {
+ id          Int        @id @default(autoincrement())
+ categoryId  Int
+ categories  Category   @relation(fields: [categoryId], references: [id])
+ athleteId   Int
+ athletes    Athlete    @relation(fields: [athleteId], references: [id])
+}
+
+model Athlete {
+  id            Int       @id @default(autoincrement())
+  firstName     String   
+  lastName      String 
+  sex           String
+  categories    CategoriesOnAthletes[]
+  countryId     Int
+  country       Country   @relation(fields: [countryId], references: [id])
+  goldResult    Result[] @relation("gold-winner")
+  silverResult  Result[] @relation("silver-winner")
+  bronzeResult  Result[] @relation("bronze-winner")
+}
+
+model Country {
+  id            Int       @id @default(autoincrement())
+  name          String
+  athletes      Athlete[]
+}
+
+model Result {
+  id                Int       @id @default(autoincrement())
+  categoryId        Int
+  category          Category  @relation(fields: [categoryId], references: [id])
+
+  goldAthleteId   Int
+  goldAthlete      Athlete  @relation("gold-winner", fields: [goldAthleteId], references: [id])
+
+  silverAthleteId Int
+  silverAthlete    Athlete  @relation("silver-winner", fields: [silverAthleteId], references: [id])
+
+  bronzeAthleteId Int
+  bronzeAthlete    Athlete  @relation("bronze-winner", fields: [bronzeAthleteId], references: [id])
+}
+
