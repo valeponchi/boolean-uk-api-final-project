@@ -1,10 +1,11 @@
 const { athlete } = require('../../utils/dbClient')
 
 async function createOneAthlete(req, res) {
-	const { firstName, lastName, categoryId, countryId } = req.body
+	const { firstName, lastName, sex, countryId } = req.body
 	const newAthlete = {
 		firstName,
 		lastName,
+		sex,
 	}
 	const createdAthlete = await athlete.create({
 		data: {

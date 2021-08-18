@@ -12,4 +12,8 @@ categoryRouter.get('/', getAllCategories)
 categoryRouter.get('/:id', getOneCategory)
 categoryRouter.delete('/:id', deleteCategory)
 
+// TO DO
+// get all category of a specific sport:
+// include sports where id = (sportId)
+
 module.exports = categoryRouter

@@ -19,11 +19,9 @@ model Location {
   sports        Sport[]
 }
 
-
 model Sport {
   id            Int       @id @default(autoincrement())
   name          String    @unique
-  // olympic_debut String?
   locationId    Int
   location      Location  @relation(fields: [locationId], references: [id])
   categories    Category[]
@@ -34,16 +32,24 @@ model Category {
   name          String    @unique
   sportId       Int
   sport         Sport     @relation(fields: [sportId], references: [id])
-  athletes      Athlete[]
   final_result  Result[]
+  athletes      CategoriesOnAthletes[]
+}
+
+model CategoriesOnAthletes {
+ id          Int        @id @default(autoincrement())
+ categoryId  Int
+ categories  Category   @relation(fields: [categoryId], references: [id])
+ athleteId   Int
+ athletes    Athlete    @relation(fields: [athleteId], references: [id])
 }
 
 model Athlete {
   id            Int       @id @default(autoincrement())
   firstName     String   
-  lastName       String 
-  categoryId    Int
-  category      Category  @relation(fields: [categoryId], references: [id])
+  lastName      String 
+  sex           String
+  categories    CategoriesOnAthletes[]
   countryId     Int
   country       Country   @relation(fields: [countryId], references: [id])
   goldResult    Result[] @relation("gold-winner")
@@ -59,7 +65,6 @@ model Country {
 
 model Result {
   id                Int       @id @default(autoincrement())
-  name              String
   categoryId        Int
   category          Category  @relation(fields: [categoryId], references: [id])
 
