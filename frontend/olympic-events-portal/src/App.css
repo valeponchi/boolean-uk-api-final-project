@@ -1,38 +1,219 @@
-.App {
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: 0.9rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-size: 1.5rem;
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 0.6rem;
+}
+
+ol,
+ul {
+  padding-inline-start: 0;
+  margin: 20px 0;
+  list-style: none;
+}
+
+.btn {
+  color: rgb(87, 87, 87);
+  display: inline-block;
+  background: linear-gradient(#f4faff, #c3d9e8);
+  border: 1px solid #e2e7e9;
+  margin: 0 5px;
+  font-size: 0.7rem;
+  padding: 6px 12px;
+  border-radius: 30px;
+  box-shadow: 3px 3px 7px rgb(240, 240, 244);
+}
+
+.btn:hover {
+  background: linear-gradient(#cbe8ff, #7cb7de);
+}
+
+.App {
+  display: grid;
+  padding: 5% 10%;
+  place-content: center;
+  text-align: center;
+  background: linear-gradient(#4496e22a, #4496e2);
+  height: 100%;
+}
+
+.logo {
+  width: 170px;
+  margin-bottom: 20px;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 30px;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.nav-btn {
+  display: grid;
+  place-items: center;
+  color: rgb(87, 87, 87);
+  background: linear-gradient(#f0f2f4, #dfe2e4);
+  border: 1px solid #e2e7e9;
+  font-size: 0.7rem;
+  padding: 6px 12px;
+  box-shadow: 3px 3px 7px rgb(240, 240, 244);
+  border-radius: 15px 15px 0px 0px;
+}
+
+.nav-btn:hover {
+  background: linear-gradient(#f0f2f4, #adc9e0);
+}
+
+.portal {
+  text-align: left;
+  background: rgb(234, 238, 243);
+  height: auto min-content;
+  width: 70vw;
+  border-radius: 14px;
+  box-shadow: 10px 10px 11px rgba(0, 0, 0, 0.2);
+  padding: 15px 20px 25px 20px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 60px;
+  gap: 10px;
+}
+
+.filter-select {
+  border: 0;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 0.8rem;
+  color: rgb(87, 87, 87);
+}
+
+.sport-card {
+  background-color: rgb(250, 250, 250);
+  padding: 20px 15px;
+  margin-bottom: 10px;
+
+  color: rgb(87, 87, 87);
+
+  border: 1px solid #e2e7e9;
+  font-size: 0.7rem;
+  box-shadow: 3px 3px 7px rgb(240, 240, 244);
+}
+
+.table-heads {
+  display: grid;
+  grid-template-columns: 30px 1fr 2fr 1fr;
+  font-weight: 400;
+  font-size: 0.8rem;
+  padding: 5px 0;
+  border-bottom: 0.5px solid rgb(222, 222, 222);
+}
+
+.table-li {
+  display: grid;
+  grid-template-columns: 30px 1fr 2fr 1fr;
+  font-size: 0.8rem;
+  padding: 5px 0;
+  border-bottom: 0.5px solid rgb(240, 240, 240);
+}
+
+.flag-icon {
+  width: 30px;
+}
+
+.cardNav {
+  text-align: right;
+}
+
+/* ADD SPORT  */
+
+.add-form {
+  margin: 10px 0;
+}
+
+.add-athlete {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.add-athlete input {
+  margin-left: 13px;
+  border: 0px;
+  color: rgba(0, 0, 0, 0.543);
+  font-size: 0.8rem;
+}
+
+.okBtn {
+  background-color: none;
+  border: 0px;
+}
+
+.okBtn:hover {
+  background-color: #4496e2;
+  border: 0px;
+}
+
+.okBtn:active {
+  background-color: greenyellow;
+  border: 0px;
+}
+
+/* popup */
+
+.blackout {
+  display: grid;
+  place-content: center;
+  background-color: rgba(0, 0, 0, 0.493);
+  width: 100%;
+  height: 100%;
+}
+.popup {
+  background: rgb(234, 238, 243);
+  height: 140px;
+  width: auto;
+  border-radius: 14px;
+  box-shadow: 10px 10px 11px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.popup select {
+  display: inline-block;
+}
+
+@media screen and (max-width: 650px) {
+  .add-athlete input {
+    display: block;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media screen and (max-width: 800px) {
+  .filters {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 25px 25px;
   }
 }
