@@ -1,48 +1,62 @@
-import { useState } from "react"
-
-export default function AddAthlete({ athletes, setAthletes }) {
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [country, setCountry] = useState("")
-
-  function onClick(e) {
-    e.preventDefault()
-    setAthletes([
-      ...athletes,
-      { firstName: firstName, lastName: lastName, country: country },
-    ])
-    console.log("athletes", athletes)
-  }
-
+export default function AddAthlete({
+  athlete,
+  onChangeSingleAthlete,
+  olympicCountries,
+  athleteIndex,
+}) {
   return (
     <li className="add-athlete">
       <select
-        onChange={e => setCountry(e.target.value)}
+        onChange={e => onChangeSingleAthlete(e, athleteIndex)}
         className="filter-select"
         type="select"
-        name="country"
+        name="countryId"
+        value={athlete.countryId}
       >
-        <option value="null">Country</option>
-        <option value="italy">Italy</option>
-        <option value="uk">UK</option>
+        <option key={0} value={null}>
+          Country
+        </option>
+        {olympicCountries.map(country => {
+          return (
+            <option key={country.id} value={country.id}>
+              {country.name}
+            </option>
+          )
+        })}
       </select>
       <input
-        onChange={e => setFirstName(e.target.value)}
+        onChange={e => onChangeSingleAthlete(e, athleteIndex)}
         type="text"
         name="firstName"
         placeholder="First Name"
         maxLength={30}
+        value={athlete.firstName}
       />
       <input
-        onChange={e => setLastName(e.target.value)}
+        onChange={e => onChangeSingleAthlete(e, athleteIndex)}
         type="text"
         name="lastName"
         placeholder="Last Name"
         maxLength={30}
+        value={athlete.lastName}
       />
-      <button className="okBtn" onClick={onClick}>
-        <p> ☑️ Submit athlete.</p>
-      </button>
+      <select
+        onChange={e => onChangeSingleAthlete(e, athleteIndex)}
+        className="filter-select"
+        type="select"
+        name="sex"
+        value={athlete.sex}
+      >
+        <option key={0} value={null}>
+          Sex
+        </option>
+        <option key={1} value={"F"}>
+          Female
+        </option>
+        <option key={2} value={"M"}>
+          Male
+        </option>
+      </select>
     </li>
   )
 }
