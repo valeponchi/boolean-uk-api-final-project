@@ -1,67 +1,84 @@
-import create from 'zustand'
+import create from "zustand"
 
-let basicUrl = 'http://localhost:4000'
+let basicUrl = "http://localhost:4000"
 
-const useStore = create((set, get) => ({
-	olympicLocations: [],
-	fetchOlympicLocations: () => {
-		fetch(`${basicUrl}/locations`)
-			.then(resp => resp.json())
-			.then(AllLocations => {
-				set({ olympicLocations: AllLocations.data })
-				console.log('AllLocations:', AllLocations.data)
-			})
-	},
+const useStore = create(set => ({
+  // bears: 0,
+  // increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
+  // removeAllBears: () => set({ bears: 0 })
 
-	olympicCountries: [],
-	fetchOlympicCountries: () => {
-		fetch(`${basicUrl}/countries`)
-			.then(resp => resp.json())
-			.then(AllCountries => {
-				set({ olympicCountries: AllCountries.data })
-				console.log('AllCountries:', AllCountries.data)
-			})
-	},
+  fetchAddFormData: alldata => {
+    fetch("http://localhost:4000/athletes/new/athletes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(alldata),
+    })
+      .then(resp => resp.json())
+      .then(resp => console.log("athletes added", resp))
+      .catch(error => {
+        console.error("Error athletes not added:", error)
+      })
+  },
 
-	olympicSports: [],
-	fetchOlympicSports: () => {
-		fetch(`${basicUrl}/sports`)
-			.then(resp => resp.json())
-			.then(AllSports => {
-				set({ olympicSports: AllSports.data })
-				console.log('AllSports:', AllSports.data)
-			})
-	},
+  olympicLocations: [],
+  fetchOlympicLocations: () => {
+    fetch(`${basicUrl}/locations`)
+      .then(resp => resp.json())
+      .then(AllLocations => {
+        set({ olympicLocations: AllLocations.data })
+        console.log("all locations", AllLocations.data)
+      })
+  },
 
-	olympicCategories: [],
-	fetchOlympicCategories: () => {
-		fetch(`${basicUrl}/categories`)
-			.then(resp => resp.json())
-			.then(AllCategories => {
-				set({ olympicCategories: AllCategories.data })
-				console.log('AllCategories:', AllCategories.data)
-			})
-	},
+  olympicCountries: [],
+  fetchOlympicCountries: () => {
+    fetch(`${basicUrl}/countries`)
+      .then(resp => resp.json())
+      .then(AllCountries => {
+        set({ olympicCountries: AllCountries.data })
+        console.log("AllCountries", AllCountries.data)
+      })
+  },
 
-	olympicAthletes: [],
-	fetchOlympicAthletes: () => {
-		fetch(`${basicUrl}/athletes`)
-			.then(resp => resp.json())
-			.then(AllAthletes => {
-				set({ olympicAthletes: AllAthletes.data })
-				console.log('AllAthletes:', AllAthletes.data)
-			})
-	},
+  olympicSports: [],
+  fetchOlympicSports: () => {
+    fetch(`${basicUrl}/sports`)
+      .then(resp => resp.json())
+      .then(AllSports => {
+        set({ olympicSports: AllSports.data })
+        console.log("AllSports", AllSports.data)
+      })
+  },
 
-	olympicResults: [],
-	fetchOlympicResults: () => {
-		fetch(`${basicUrl}/results`)
-			.then(resp => resp.json())
-			.then(AllResults => {
-				set({ olympicResults: AllResults.data })
-				console.log('AllResults:', AllResults.data)
-			})
-	},
+  olympicCategories: [],
+  fetchOlympicCategories: () => {
+    fetch(`${basicUrl}/categories`)
+      .then(resp => resp.json())
+      .then(AllCategories => {
+        set({ olympicCategories: AllCategories.data })
+        console.log("AllCategories", AllCategories.data)
+      })
+  },
+
+  olympicAthletes: [],
+  fetchOlympicAthletes: () => {
+    fetch(`${basicUrl}/athletes`)
+      .then(resp => resp.json())
+      .then(AllAthletes => {
+        set({ olympicAthletes: AllAthletes.data })
+        console.log("AllAthletes", AllAthletes.data)
+      })
+  },
+
+  olympicResults: [],
+  fetchOlympicResults: () => {
+    fetch(`${basicUrl}/results`)
+      .then(resp => resp.json())
+      .then(AllResults => {
+        set({ olympicResults: AllResults })
+      })
+  },
+
 }))
 
 export default useStore

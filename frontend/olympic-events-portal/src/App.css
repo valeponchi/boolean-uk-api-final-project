@@ -29,6 +29,11 @@ p {
   font-size: 0.6rem;
 }
 
+.bodyText {
+  margin-bottom: 8px;
+  color: red;
+}
+
 ol,
 ul {
   padding-inline-start: 0;
