@@ -10,13 +10,12 @@ export default function Filter() {
 
 	const olympicCategories = useStore(store => store.olympicCategories)
 	const fetchOlympicCategories = useStore(store => store.fetchOlympicCategories)
+	const resultToShow = useStore(store => store.resultToShow)
+	const fetchingResult = useStore(store => store.fetchingResult)
 
 	useEffect(() => {
 		fetchOlympicLocations()
 		console.log('I am fetching the locations now..')
-
-		// fetchOlympicCountries()
-		// console.log('I am fetching the countries now..')
 
 		fetchOlympicSports()
 		console.log('I am fetching the sports now..')
@@ -39,18 +38,20 @@ export default function Filter() {
 		})
 	}
 
-	let dataOfResult = {}
 	function handleSubmit(event) {
 		event.preventDefault()
 		const { location, sports, category } = selectedOptionsForm
+
+		fetchingResult(location, sports, category)
+		console.log('resultToShow:', resultToShow)
 		// build the fetch
-		fetch(
-			`http://localhost:4000/results/search?location=${location}&sports=${sports}&category=${category}`
-		)
-			.then(resp => {
-				resp.json()
-			})
-			.then(data => console.log(data))
+		// fetch(
+		// 	`http://localhost:4000/results/search?location=${location}&sports=${sports}&category=${category}`
+		// )
+		// 	.then(resp => resp.json())
+		// 	.then(result =>
+		// 		console.log('result from backend:', result.requestedResult)
+		// 	)
 	}
 
 	return (
