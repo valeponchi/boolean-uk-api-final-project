@@ -1,45 +1,104 @@
-export default function Filter() {
-  function handleSubmit(event) {
-    event.preventDefault()
-    const data = {
-      sport: event.target.sport.value,
-      category: event.target.category.value,
-      country: event.target.country.value,
-      athlete: event.target.athlete.value,
-      medal: event.target.medal.value,
-    }
-    console.log("filter data:", data)
-  }
+import { useEffect, useState } from 'react'
+import useStore from '../store'
 
-  return (
-    <form className="filters" onSubmit={handleSubmit}>
-      <select className="filter-select" type="select" name="sport">
-        <option value="null">Sport</option>
-        <option value="atheltics">Athletics</option>
-        <option value="gymnastics">Gymnastics</option>
-      </select>
-      <select className="filter-select" type="select" name="category">
-        <option value="null">Category</option>
-        <option value="100m-sprint">100m Sprint</option>
-        <option value="relay">Relay</option>
-      </select>
-      <select className="filter-select" type="select" name="country">
-        <option value="null">Country</option>
-        <option value="italy">Italy</option>
-        <option value="uk">UK</option>
-      </select>
-      <select className="filter-select" type="select" name="athlete">
-        <option value="null">Athlete</option>
-        <option value="vale">Vale</option>
-        <option value="millie">Millie</option>
-      </select>
-      <select className="filter-select" type="select" name="medal">
-        <option value="null">Medal</option>
-        <option value="gold">Gold</option>
-        <option value="silver">Silver</option>
-        <option value="bronze">Bronze</option>
-      </select>
-      <input className="btn" type="submit" value="Filter" />
-    </form>
-  )
+export default function Filter() {
+	const olympicLocations = useStore(store => store.olympicLocations)
+	const fetchOlympicLocations = useStore(store => store.fetchOlympicLocations)
+
+	const olympicSports = useStore(store => store.olympicSports)
+	const fetchOlympicSports = useStore(store => store.fetchOlympicSports)
+
+	const olympicCategories = useStore(store => store.olympicCategories)
+	const fetchOlympicCategories = useStore(store => store.fetchOlympicCategories)
+
+	useEffect(() => {
+		fetchOlympicLocations()
+		console.log('I am fetching the locations now..')
+
+		// fetchOlympicCountries()
+		// console.log('I am fetching the countries now..')
+
+		fetchOlympicSports()
+		console.log('I am fetching the sports now..')
+
+		fetchOlympicCategories()
+		console.log('I am fetching the categories now..')
+	}, [])
+
+	const [selectedOptionsForm, setSelectedOptionsForm] = useState({
+		location: null,
+		sports: null,
+		category: null,
+	})
+
+	function handleChange(e) {
+		console.log(e.target.value)
+		setSelectedOptionsForm({
+			...selectedOptionsForm,
+			[e.target.name]: e.target.value,
+		})
+	}
+
+	let dataOfResult = {}
+	function handleSubmit(event) {
+		event.preventDefault()
+		const { location, sports, category } = selectedOptionsForm
+		// build the fetch
+		fetch(
+			`http://localhost:4000/results/search?location=${location}&sports=${sports}&category=${category}`
+		)
+			.then(resp => {
+				resp.json()
+			})
+			.then(data => console.log(data))
+	}
+
+	return (
+		<form className="filters" onSubmit={handleSubmit}>
+			{/* LOCATIONS  */}
+			<select
+				className="filter-select"
+				type="select"
+				name="location"
+				onChange={handleChange}
+				value={selectedOptionsForm.location}>
+				<option value="null">Olympics Location</option>
+				{olympicLocations.map(item => (
+					<option key={item.id} value={item.name}>
+						{item.title}
+					</option>
+				))}
+			</select>
+			{/* SPORTS  */}
+			<select
+				className="filter-select"
+				type="select"
+				name="sports"
+				onChange={handleChange}
+				value={selectedOptionsForm.sports}>
+				<option value="null">Sport</option>
+				{olympicSports.map(item => (
+					<option key={item.id} value={item.name}>
+						{item.name}
+					</option>
+				))}
+			</select>
+			{/* CATEGORIES  */}
+			<select
+				className="filter-select"
+				type="select"
+				name="category"
+				onChange={handleChange}
+				value={selectedOptionsForm.category}>
+				<option value="null">Category</option>
+				{olympicCategories.map(item => (
+					<option key={item.id} value={item.name}>
+						{item.name}
+					</option>
+				))}
+			</select>
+
+			<input className="btn" type="submit" value="Search" />
+		</form>
+	)
 }
