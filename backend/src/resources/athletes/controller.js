@@ -1,5 +1,19 @@
 const { athlete } = require('../../utils/dbClient')
 
+const getAllAthletes = async (req, res) => {
+	const allAthletes = await athlete.findMany()
+	res.json({ data: allAthletes })
+}
+
+const getOneAthlete = async (req, res) => {
+	const { id } = req.params
+
+	const oneAthlete = await athlete.findUnique({
+		where: { id: parseInt(id) },
+	})
+	res.json({ data: oneAthlete })
+}
+
 async function createOneAthlete(req, res) {
 	const { firstName, lastName, sex, countryId, categoryId } = req.body
 	const newAthlete = {
@@ -7,6 +21,7 @@ async function createOneAthlete(req, res) {
 		lastName,
 		sex,
 	}
+
 	const createdAthlete = await athlete.create({
 		data: {
 			...newAthlete,
@@ -15,7 +30,7 @@ async function createOneAthlete(req, res) {
 				create: {
 					categories: {
 						connect: {
-							id: 1,
+							id: categoryId,
 						},
 					},
 				},
@@ -25,4 +40,4 @@ async function createOneAthlete(req, res) {
 	res.json({ data: createdAthlete })
 }
 
-module.exports = { createOneAthlete }
+module.exports = { getAllAthletes, getOneAthlete, createOneAthlete }
