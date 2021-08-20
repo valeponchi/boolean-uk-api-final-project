@@ -78,6 +78,7 @@ const useStore = create(set => ({
         set({ olympicResults: AllResults })
       })
   },
+
 }))
 
 export default useStore
