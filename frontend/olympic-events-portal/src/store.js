@@ -7,18 +7,18 @@ const useStore = create(set => ({
 	// increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
 	// removeAllBears: () => set({ bears: 0 })
 
-	fetchAddFormData: alldata => {
-		fetch('http://localhost:4000/athletes/new/athletes', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(alldata),
-		})
-			.then(resp => resp.json())
-			.then(resp => console.log('athletes added', resp))
-			.catch(error => {
-				console.error('Error athletes not added:', error)
-			})
-	},
+  fetchAddFormData: alldata => {
+    fetch("http://localhost:4000/athletes/new/athletes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(alldata),
+    })
+      .then(resp => resp.json())
+      .catch(error => {
+        console.error("Error athletes not added:", error)
+      })
+  },
+
 
 	olympicLocations: [],
 	fetchOlympicLocations: () => {
@@ -50,15 +50,36 @@ const useStore = create(set => ({
 			})
 	},
 
-	olympicCategories: [],
-	fetchOlympicCategories: () => {
-		fetch(`${basicUrl}/categories`)
-			.then(resp => resp.json())
-			.then(AllCategories => {
-				set({ olympicCategories: AllCategories.data })
-				console.log('AllCategories', AllCategories.data)
-			})
-	},
+  sportsByLocation: [],
+  fetchSportsByLocation: locationId => {
+    fetch(`${basicUrl}/sports/location/:${locationId}`)
+      .then(resp => resp.json())
+      .then(AllSports => {
+        set({ sportsByLocation: AllSports.data })
+        console.log(`sportsByLocation at ${locationId}`, AllSports.data)
+      })
+  },
+
+  olympicCategories: [],
+  fetchOlympicCategories: () => {
+    fetch(`${basicUrl}/categories`)
+      .then(resp => resp.json())
+      .then(AllCategories => {
+        set({ olympicCategories: AllCategories.data })
+        console.log("AllCategories", AllCategories.data)
+      })
+  },
+
+  categoriesBysport: [],
+  fetchCategoriesBySport: sportId => {
+    fetch(`${basicUrl}/categories/sport/:${sportId}`)
+      .then(resp => resp.json())
+      .then(AllCategories => {
+        set({ categoriesBySport: AllCategories.data })
+        console.log(`categoriesBysport at ${sportId}`, AllCategories.data)
+      })
+  },
+
 
 	olympicAthletes: [],
 	fetchOlympicAthletes: () => {
@@ -89,6 +110,7 @@ const useStore = create(set => ({
 				set({ resultToShow: result.requestedResult })
 			})
 	},
+
 }))
 
 export default useStore
