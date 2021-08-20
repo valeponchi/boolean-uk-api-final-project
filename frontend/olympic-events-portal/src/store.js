@@ -14,7 +14,6 @@ const useStore = create(set => ({
       body: JSON.stringify(alldata),
     })
       .then(resp => resp.json())
-      .then(resp => console.log("athletes added", resp))
       .catch(error => {
         console.error("Error athletes not added:", error)
       })
@@ -50,6 +49,16 @@ const useStore = create(set => ({
       })
   },
 
+  sportsByLocation: [],
+  fetchSportsByLocation: locationId => {
+    fetch(`${basicUrl}/sports/location/:${locationId}`)
+      .then(resp => resp.json())
+      .then(AllSports => {
+        set({ sportsByLocation: AllSports.data })
+        console.log(`sportsByLocation at ${locationId}`, AllSports.data)
+      })
+  },
+
   olympicCategories: [],
   fetchOlympicCategories: () => {
     fetch(`${basicUrl}/categories`)
@@ -57,6 +66,16 @@ const useStore = create(set => ({
       .then(AllCategories => {
         set({ olympicCategories: AllCategories.data })
         console.log("AllCategories", AllCategories.data)
+      })
+  },
+
+  categoriesBysport: [],
+  fetchCategoriesBySport: sportId => {
+    fetch(`${basicUrl}/categories/sport/:${sportId}`)
+      .then(resp => resp.json())
+      .then(AllCategories => {
+        set({ categoriesBySport: AllCategories.data })
+        console.log(`categoriesBysport at ${sportId}`, AllCategories.data)
       })
   },
 
@@ -78,7 +97,6 @@ const useStore = create(set => ({
         set({ olympicResults: AllResults })
       })
   },
-
 }))
 
 export default useStore

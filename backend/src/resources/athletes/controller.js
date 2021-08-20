@@ -1,21 +1,20 @@
 const { athlete, sport } = require("../../utils/dbClient")
 
 const getAllAthletes = async (req, res) => {
-	const allAthletes = await athlete.findMany()
-	res.json({ data: allAthletes })
+  const allAthletes = await athlete.findMany()
+  res.json({ data: allAthletes })
 }
 
 const getOneAthlete = async (req, res) => {
-	const { id } = req.params
+  const { id } = req.params
 
-	const oneAthlete = await athlete.findUnique({
-		where: { id: parseInt(id) },
-	})
-	res.json({ data: oneAthlete })
+  const oneAthlete = await athlete.findUnique({
+    where: { id: parseInt(id) },
+  })
+  res.json({ data: oneAthlete })
 }
 
 async function createOneAthlete(req, res) {
-
   const { firstName, lastName, sex, countryId, categoryId } = req.body
   const newAthlete = {
     firstName,
@@ -41,8 +40,8 @@ async function createOneAthlete(req, res) {
 }
 
 async function createMultiAthletes(req, res) {
-  const { locationId, sportId, categoryId, athletes } = req.body
-  // const { firstName, lastName, sex, countryId } = athletes
+  const { categoryId, athletes } = req.body
+  // { firstName, lastName, sex, countryId } = athletes[]
   const filteredAthletes = athletes.filter(athlete => athlete.firstName !== "")
   try {
     filteredAthletes.map(async newAthlete => {
@@ -60,18 +59,6 @@ async function createMultiAthletes(req, res) {
                   connect: {
                     id: parseInt(categoryId),
                   },
-                  // connect: {
-                  //   sport: {
-                  //     connect: {
-                  //       id: parseInt(sportId),
-                  //     },
-                  //     connect: {
-                  //       location: { connect: { id: parseInt(locationId) } },
-                  //     },
-                  //   },
-                  // },
-
-                  //This isn't needed as because the fields are pulled from the server the conections already exist. we need to think about removing the form options??
                 },
               },
             ],
@@ -85,5 +72,9 @@ async function createMultiAthletes(req, res) {
   }
 }
 
-
-module.exports = { getAllAthletes, getOneAthlete, createOneAthlete }
+module.exports = {
+  getAllAthletes,
+  getOneAthlete,
+  createOneAthlete,
+  createMultiAthletes,
+}

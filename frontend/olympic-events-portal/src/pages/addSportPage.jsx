@@ -17,6 +17,12 @@ export default function AddSportPage() {
 
   const fetchAddFormData = useStore(store => store.fetchAddFormData)
 
+  const sportsByLocation = useStore(store => store.sportsByLocation)
+  const fetchSportsByLocation = useStore(store => store.fetchSportsByLocation)
+
+  const categoriesBysport = useStore(store => store.categoriesBysport)
+  const fetchCategoriesBySport = useStore(store => store.fetchCategoriesBySport)
+
   useEffect(() => {
     fetchOlympicLocations()
     fetchOlympicCategories()
@@ -44,21 +50,31 @@ export default function AddSportPage() {
       }
     })
     setAthletes(newAthletes)
-    console.log("newAthletes", newAthletes)
   }
 
   function handleSubmit(e) {
     e.preventDefault()
     const data = {
-      locationId: e.target.location.value,
-      sportId: e.target.sport.value,
       categoryId: e.target.category.value,
       athletes: athletes,
     }
-
-    console.log("add sport data:", data)
     fetchAddFormData(data)
     e.target.reset()
+    setAthletes(initialAthletesStateArray)
+  }
+
+  function handleLocationChange(e) {
+    e.preventDefault()
+    const locationId = e.target.value
+    console.log("locationId", locationId)
+    fetchSportsByLocation(locationId)
+  }
+
+  function handleSportChange(e) {
+    e.preventDefault()
+    const sportId = e.target.value
+    console.log("sportId", sportId)
+    fetchCategoriesBySport(sportId)
   }
 
   return (
@@ -66,6 +82,7 @@ export default function AddSportPage() {
       <h3>Select Sport</h3>
       <form className="add-form" onSubmit={handleSubmit}>
         <select
+          onChange={e => handleLocationChange(e)}
           className="filter-select"
           type="select"
           name="location"
@@ -82,11 +99,20 @@ export default function AddSportPage() {
             )
           })}
         </select>
-        <select className="filter-select" type="select" name="sport" required>
+        <select
+          onChange={() => handleSportChange}
+          className="filter-select"
+          type="select"
+          name="sport"
+          required
+        >
           <option key={0} value={null}>
             Sport
           </option>
-          {olympicSports.map(sport => {
+          {sportsByLocation.map(sport => {
+            {
+              /* {olympicSports.map(sport => { */
+            }
             return (
               <option key={sport.id} value={sport.id}>
                 {sport.name}
@@ -103,6 +129,7 @@ export default function AddSportPage() {
           <option key={0} value={null}>
             Category
           </option>
+          {/* {categoriesBysport.map(category => { */}
           {olympicCategories.map(category => {
             return (
               <option key={category.id} value={category.id}>
