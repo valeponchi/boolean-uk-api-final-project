@@ -38,35 +38,25 @@ async function createMultiAthletes(req, res) {
           lastName: lastName,
           sex: sex,
           country: { connect: { id: parseInt(countryId) } },
-
-          // categories: {
-          //   create: [
-          //     {
-          //       categories: {
-          //         connect: {
-          //           id: parseInt(categoryId),
-          //         },
-          //       },
-          //     },
-          //   ],
           categories: {
-            //categories: categoriesOnAthletes[]
             create: [
               {
                 categories: {
                   connect: {
                     id: parseInt(categoryId),
                   },
-                  connect: {
-                    sport: {
-                      connect: {
-                        id: parseInt(sportId),
-                      },
-                      connect: {
-                        location: { connect: { id: parseInt(locationId) } },
-                      },
-                    },
-                  },
+                  // connect: {
+                  //   sport: {
+                  //     connect: {
+                  //       id: parseInt(sportId),
+                  //     },
+                  //     connect: {
+                  //       location: { connect: { id: parseInt(locationId) } },
+                  //     },
+                  //   },
+                  // },
+
+                  //This isn't needed as because the fields are pulled from the server the conections already exist. we need to think about removing the form options??
                 },
               },
             ],

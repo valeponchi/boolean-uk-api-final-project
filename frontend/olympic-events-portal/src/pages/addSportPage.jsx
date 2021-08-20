@@ -61,10 +61,6 @@ export default function AddSportPage() {
     e.target.reset()
   }
 
-  console.log("olympicCategories", olympicCategories)
-  console.log("olympicLocations", olympicLocations)
-  console.log("olympicSports", olympicSports)
-  console.log("olympicCountries", olympicCountries)
   return (
     <>
       <h3>Select Sport</h3>
