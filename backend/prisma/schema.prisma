@@ -60,6 +60,7 @@ model Athlete {
 model Country {
   id            Int       @id @default(autoincrement())
   name          String
+  code          String?
   athletes      Athlete[]
 }
 

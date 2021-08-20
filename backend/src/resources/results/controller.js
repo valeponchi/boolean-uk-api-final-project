@@ -52,9 +52,45 @@ const searchingResult = async (req, res) => {
 
 		//include is for the RESPONSE !!!
 		include: {
-			goldAthlete: true,
-			silverAthlete: true,
-			bronzeAthlete: true,
+			goldAthlete: {
+				select: {
+					firstName: true,
+					lastName: true,
+					sex: true,
+					country: {
+						select: {
+							name: true,
+							code: true,
+						},
+					},
+				},
+			},
+			silverAthlete: {
+				select: {
+					firstName: true,
+					lastName: true,
+					sex: true,
+					country: {
+						select: {
+							name: true,
+							code: true,
+						},
+					},
+				},
+			},
+			bronzeAthlete: {
+				select: {
+					firstName: true,
+					lastName: true,
+					sex: true,
+					country: {
+						select: {
+							name: true,
+							code: true,
+						},
+					},
+				},
+			},
 			category: {
 				select: {
 					name: true,

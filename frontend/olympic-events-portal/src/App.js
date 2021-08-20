@@ -1,5 +1,5 @@
-import React from "react"
-import { Route, Switch } from "react-router-dom"
+import React from 'react'
+import { Route, Switch } from 'react-router-dom'
 
 import "./App.css"
 import Nav from "./components/nav"
@@ -29,6 +29,7 @@ function App() {
       </div>
     </div>
   )
+
 }
 
 export default App

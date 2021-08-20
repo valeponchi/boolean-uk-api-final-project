@@ -1,4 +1,4 @@
-const { athlete, sport } = require("../../utils/dbClient")
+const { athlete, sport } = require('../../utils/dbClient')
 
 const getAllAthletes = async (req, res) => {
   const allAthletes = await athlete.findMany()
@@ -78,3 +78,4 @@ module.exports = {
   createOneAthlete,
   createMultiAthletes,
 }
+
