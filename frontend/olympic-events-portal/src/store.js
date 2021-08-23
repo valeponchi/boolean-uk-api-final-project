@@ -1,11 +1,11 @@
-import create from 'zustand'
+import create from "zustand"
 
-let basicUrl = 'http://localhost:4000'
+let basicUrl = "http://localhost:4000"
 
 const useStore = create(set => ({
-	// bears: 0,
-	// increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
-	// removeAllBears: () => set({ bears: 0 })
+  // bears: 0,
+  // increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
+  // removeAllBears: () => set({ bears: 0 })
 
   fetchAddFormData: alldata => {
     fetch("http://localhost:4000/athletes/new/athletes", {
@@ -19,40 +19,39 @@ const useStore = create(set => ({
       })
   },
 
+  olympicLocations: [],
+  fetchOlympicLocations: () => {
+    fetch(`${basicUrl}/locations`)
+      .then(resp => resp.json())
+      .then(AllLocations => {
+        set({ olympicLocations: AllLocations.data })
+        console.log("all locations", AllLocations.data)
+      })
+  },
 
-	olympicLocations: [],
-	fetchOlympicLocations: () => {
-		fetch(`${basicUrl}/locations`)
-			.then(resp => resp.json())
-			.then(AllLocations => {
-				set({ olympicLocations: AllLocations.data })
-				console.log('all locations', AllLocations.data)
-			})
-	},
+  olympicCountries: [],
+  fetchOlympicCountries: () => {
+    fetch(`${basicUrl}/countries`)
+      .then(resp => resp.json())
+      .then(AllCountries => {
+        set({ olympicCountries: AllCountries.data })
+        console.log("AllCountries", AllCountries.data)
+      })
+  },
 
-	olympicCountries: [],
-	fetchOlympicCountries: () => {
-		fetch(`${basicUrl}/countries`)
-			.then(resp => resp.json())
-			.then(AllCountries => {
-				set({ olympicCountries: AllCountries.data })
-				console.log('AllCountries', AllCountries.data)
-			})
-	},
-
-	olympicSports: [],
-	fetchOlympicSports: () => {
-		fetch(`${basicUrl}/sports`)
-			.then(resp => resp.json())
-			.then(AllSports => {
-				set({ olympicSports: AllSports.data })
-				console.log('AllSports', AllSports.data)
-			})
-	},
+  olympicSports: [],
+  fetchOlympicSports: () => {
+    fetch(`${basicUrl}/sports`)
+      .then(resp => resp.json())
+      .then(AllSports => {
+        set({ olympicSports: AllSports.data })
+        console.log("AllSports", AllSports.data)
+      })
+  },
 
   sportsByLocation: [],
   fetchSportsByLocation: locationId => {
-    fetch(`${basicUrl}/sports/location/:${locationId}`)
+    fetch(`${basicUrl}/sports/location/${locationId}`)
       .then(resp => resp.json())
       .then(AllSports => {
         set({ sportsByLocation: AllSports.data })
@@ -70,9 +69,9 @@ const useStore = create(set => ({
       })
   },
 
-  categoriesBysport: [],
+  categoriesBySport: [],
   fetchCategoriesBySport: sportId => {
-    fetch(`${basicUrl}/categories/sport/:${sportId}`)
+    fetch(`${basicUrl}/categories/sport/${sportId}`)
       .then(resp => resp.json())
       .then(AllCategories => {
         set({ categoriesBySport: AllCategories.data })
@@ -80,37 +79,35 @@ const useStore = create(set => ({
       })
   },
 
+  olympicAthletes: [],
+  fetchOlympicAthletes: () => {
+    fetch(`${basicUrl}/athletes`)
+      .then(resp => resp.json())
+      .then(AllAthletes => {
+        set({ olympicAthletes: AllAthletes.data })
+        console.log("AllAthletes", AllAthletes.data)
+      })
+  },
 
-	olympicAthletes: [],
-	fetchOlympicAthletes: () => {
-		fetch(`${basicUrl}/athletes`)
-			.then(resp => resp.json())
-			.then(AllAthletes => {
-				set({ olympicAthletes: AllAthletes.data })
-				console.log('AllAthletes', AllAthletes.data)
-			})
-	},
+  olympicResults: [],
+  fetchOlympicResults: () => {
+    fetch(`${basicUrl}/results`)
+      .then(resp => resp.json())
+      .then(AllResults => {
+        set({ olympicResults: AllResults })
+      })
+  },
 
-	olympicResults: [],
-	fetchOlympicResults: () => {
-		fetch(`${basicUrl}/results`)
-			.then(resp => resp.json())
-			.then(AllResults => {
-				set({ olympicResults: AllResults })
-			})
-	},
-
-	resultToShow: [],
-	fetchingResult: (location, sports, category) => {
-		fetch(
-			`http://localhost:4000/results/search?location=${location}&sports=${sports}&category=${category}`
-		)
-			.then(resp => resp.json())
-			.then(result => {
-				set({ resultToShow: result.requestedResult })
-			})
-	},
-
+  resultToShow: [],
+  fetchingResult: (location, sports, category) => {
+    fetch(
+      `http://localhost:4000/results/search?location=${location}&sports=${sports}&category=${category}`
+    )
+      .then(resp => resp.json())
+      .then(result => {
+        set({ resultToShow: result.requestedResult })
+      })
+  },
 }))
 
 export default useStore

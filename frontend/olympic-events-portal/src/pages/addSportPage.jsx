@@ -20,7 +20,7 @@ export default function AddSportPage() {
   const sportsByLocation = useStore(store => store.sportsByLocation)
   const fetchSportsByLocation = useStore(store => store.fetchSportsByLocation)
 
-  const categoriesBysport = useStore(store => store.categoriesBysport)
+  const categoriesBySport = useStore(store => store.categoriesBySport)
   const fetchCategoriesBySport = useStore(store => store.fetchCategoriesBySport)
 
   useEffect(() => {
@@ -71,6 +71,7 @@ export default function AddSportPage() {
   }
 
   function handleSportChange(e) {
+    console.log("working????")
     e.preventDefault()
     const sportId = e.target.value
     console.log("sportId", sportId)
@@ -100,7 +101,7 @@ export default function AddSportPage() {
           })}
         </select>
         <select
-          onChange={() => handleSportChange}
+          onChange={e => handleSportChange(e)}
           className="filter-select"
           type="select"
           name="sport"
@@ -110,9 +111,8 @@ export default function AddSportPage() {
             Sport
           </option>
           {sportsByLocation.map(sport => {
-            {
-              /* {olympicSports.map(sport => { */
-            }
+            /* {olympicSports.map(sport => { */
+
             return (
               <option key={sport.id} value={sport.id}>
                 {sport.name}
@@ -129,8 +129,8 @@ export default function AddSportPage() {
           <option key={0} value={null}>
             Category
           </option>
-          {/* {categoriesBysport.map(category => { */}
-          {olympicCategories.map(category => {
+          {categoriesBySport.map(category => {
+            // {olympicCategories.map(category => {
             return (
               <option key={category.id} value={category.id}>
                 {category.name}

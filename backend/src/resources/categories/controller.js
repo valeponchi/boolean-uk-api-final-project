@@ -32,9 +32,7 @@ const getCategoriesBySport = async (req, res) => {
   const { id } = req.params
   console.log("req.params id", id)
   const allCategories = await category.findMany({
-    //  where: { locationId: parseInt(id) } },
-    //  where: { location: { connect: { id: parseInt(id) } } },
-    //  where: { locationId: { is: parseInt(id) } },
+    where: { sportId: parseInt(id) },
   })
   res.json({ data: allCategories })
 }
