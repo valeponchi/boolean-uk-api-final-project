@@ -29,15 +29,11 @@ const getOneSport = async (req, res) => {
 }
 
 const getSportsByLocation = async (req, res) => {
-  //   const { id } = req.params
-  //   console.log("req.params id", id)
-  const allSports = await sport
-    .findMany
-
-    //  {where: { locationId: parseInt(id) } },
-    //  where: { location: { connect: { id: parseInt(id) } } },
-    //  where: { locationId: { is: parseInt(id) } },}
-    ()
+  const { id } = req.params
+  console.log("req.params id", id)
+  const allSports = await sport.findMany({
+    where: { locationId: parseInt(id) },
+  })
   res.json({ data: allSports })
 }
 
